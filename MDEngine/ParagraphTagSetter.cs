@@ -1,8 +1,8 @@
 namespace MDEngine;
 
-public class TagSetter
+public class ParagraphTagSetter
 {
-    private string InputString { get; set; }
+    private readonly string _inputString;
     private int HeaderCounter { get; set; } = 0;
 
     private bool _headerFlag = false;
@@ -13,21 +13,16 @@ public class TagSetter
 
     public bool TagSet => _tagSet;
 
-    public TagSetter()
+    public ParagraphTagSetter(string inputString)
     {
-        InputString = "";
-    }
-
-    public TagSetter(string inputString)
-    {
-        InputString = inputString;
+        _inputString = inputString;
     }
 
     public string OpenParagraphTag(ref int indexPosition)
     {
-        for (var i = indexPosition; i < InputString.Length; i++)
+        for (var i = indexPosition; i < _inputString.Length; i++)
         {
-            if (InputString[i] == '#')
+            if (_inputString[i] == '#')
             {
                 HeaderCounter++;
                 _headerFlag = true;
@@ -62,8 +57,6 @@ public class TagSetter
             ResetHeaderValues();
             return $"</h{temp}>";
         }
-        
-        Console.WriteLine("adding a closing p tag");
         ResetHeaderValues();
         return "</p>";
     }

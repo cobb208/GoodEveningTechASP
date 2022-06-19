@@ -1,4 +1,4 @@
-namespace MDEngine;
+namespace MDEngine.Tags;
 
 public class BoldTag : ITag
 {
@@ -9,7 +9,7 @@ public class BoldTag : ITag
         _isBold = false;
     }
 
-    public string Toggle(char character)
+    public string Toggle()
     {
         if (_isBold)
         {

@@ -7,4 +7,9 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\DataModels\DataModels.csproj" />
+      <ProjectReference Include="..\MDEngine\MDEngine.csproj" />
+    </ItemGroup>
+
 </Project>

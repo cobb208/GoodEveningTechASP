@@ -1,4 +1,4 @@
-namespace MDEngine;
+namespace MDEngine.Tags;
 
 public class ItalicTag : ITag
 {
@@ -9,7 +9,7 @@ public class ItalicTag : ITag
         _isItalic = false;
     }
 
-    public string Toggle(char character)
+    public string Toggle()
     {
         if (_isItalic)
         {

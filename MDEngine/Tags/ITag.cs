@@ -1,6 +1,6 @@
-namespace MDEngine;
+namespace MDEngine.Tags;
 
 public interface ITag
 {
-    string Toggle(char character);
+    string Toggle();
 }
