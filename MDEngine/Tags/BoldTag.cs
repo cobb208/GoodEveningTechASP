@@ -1,23 +1,28 @@
-namespace MDEngine.Tags;
-
-public class BoldTag : ITag
+﻿using System;
+namespace MDEngine.Tags
 {
-    private bool _isBold;
+	public class BoldTag
+	{
+		private bool _isBold;
 
-    public BoldTag()
-    {
-        _isBold = false;
-    }
+		public bool IsBold => _isBold;
 
-    public string Toggle()
-    {
-        if (_isBold)
+		public BoldTag()
+		{
+			_isBold = false;
+		}
+
+		public string Create()
         {
-            _isBold = !_isBold;
-            return "</strong>";
+			_isBold = true;
+			return "<strong>";
         }
 
-        _isBold = !_isBold;
-        return "<strong>";
-    }
+		public string Close()
+        {
+			_isBold = false;
+			return "</strong>";
+        }
+	}
 }
+

@@ -1,23 +1,32 @@
-namespace MDEngine.Tags;
-
-public class ItalicTag : ITag
+﻿using System;
+namespace MDEngine.Tags
 {
-    private bool _isItalic;
+	public class ItalicTag
+	{
+		private bool _isItalic;
 
-    public ItalicTag()
-    {
-        _isItalic = false;
-    }
 
-    public string Toggle()
-    {
-        if (_isItalic)
+		public bool IsItalic => _isItalic;
+
+
+		public ItalicTag()
+		{
+			_isItalic = false;
+		}
+
+
+		public string Create()
         {
-            _isItalic = !_isItalic;
-            return "</em>";
+			_isItalic = true;
+			return "<em>";
         }
-        _isItalic = !_isItalic;
-        return "<em>";
-    }
-    
+
+		public string Close()
+        {
+			_isItalic = false;
+			return "</em>";
+        }
+
+	}
 }
+

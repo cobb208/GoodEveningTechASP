@@ -4,6 +4,10 @@ public class UnorderedListTag
 {
     private readonly string _inputString;
 
+    private bool _isInList = false;
+
+    public bool IsInList => _isInList;
+
     public UnorderedListTag(string inputString)
     {
         _inputString = inputString;

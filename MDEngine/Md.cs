@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.RegularExpressions;
 using MDEngine.Tags;
 
 namespace MDEngine;
@@ -22,78 +23,139 @@ public class Md
         ItalicBold
     }
 
-    public void GenerateMd()
+
+    public void NewGenerateMd()
     {
-        var result = "<div class=\"container\">\n";
+        var result = "<div class='container'>\n";
         using var fs = File.Open(_inputFilePath, FileMode.Open);
         var b = new byte[fs.Length];
         var temp = new UTF8Encoding(true);
 
-        ITag italicTag = new ItalicTag();
-        ITag boldTag = new BoldTag();
-
-        while (fs.Read(b, 0, b.Length) > 0)
+        while(fs.Read(b, 0, b.Length) > 0)
         {
             var inputString = temp.GetString(b);
 
-            ParagraphTagSetter paragraphTagSetter = new(inputString);
-            UnorderedListTag unorderedListTag = new(inputString);
+            ListTag listTag = new();
+            HeaderTag headerTag = new(inputString);
+            ParagraphTag paragraphTag = new();
+            ItalicTag italicTag = new();
+            BoldTag boldTag = new();
+            AnchorTag anchorTag = new(inputString);
 
-            for (var i = 0; i < inputString.Length; i++)
+            for(var i = 0; i < inputString.Length; i++)
             {
-                if (!paragraphTagSetter.TagSet)
+
+                if(inputString[i] == '-')
                 {
-                    result += paragraphTagSetter.OpenParagraphTag(ref i);
-                    continue;
-                }
-                
-                
-                
-                if (inputString[i] == '-')
-                {
-                    result += unorderedListTag.GenerateList(ref i);
+                    result += listTag.Create();
                     continue;
                 }
 
-
-                switch (inputString[i])
+                if(inputString[i] == '#')
                 {
-                    case '*':
-                        var sentenceCase = SetSentenceCase(inputString, i);
-                        
-                        switch (sentenceCase)
+                    result += headerTag.Create(ref i);
+
+                }
+
+                if(!headerTag.IsHeader
+                    && !listTag.IsList
+                    && !paragraphTag.IsParagraph
+                    && (inputString[i] != '\n'))
+                {
+                    result += paragraphTag.Create();
+                }
+
+
+                // needs a way to validate it is not a link...
+                if(inputString[i] == '[')
+                {
+
+                    var checkVal = anchorTag.Create(ref i);
+
+                    if(checkVal == String.Empty)
+                    {
+                        result += inputString[i];
+                        continue;
+                    } else
+                    {
+                        result += checkVal;
+                    }
+
+                }
+
+
+
+                if(inputString[i] == '*')
+                {
+                    try
+                    {
+                        if (inputString[i + 1] == '*')
                         {
-                            case SentenceCase.Italic:
-                                result += italicTag.Toggle();
-                                continue;
-                            case SentenceCase.Bold:
-                                result += boldTag.Toggle();
+                            if (boldTag.IsBold)
+                            {
+                                result += boldTag.Close();
                                 i++;
                                 continue;
-                            case SentenceCase.ItalicBold:
-                                result += italicTag.Toggle();
-                                result += boldTag.Toggle();
-                                i += 2;
+                            }
+                            else
+                            {
+                                result += boldTag.Create();
+                                i++;
                                 continue;
-                            default:
-                                throw new ArgumentOutOfRangeException();
+                            }
+
                         }
-                    case '\n':
-                        result += paragraphTagSetter.CloseParagraphTag();
-                        result += '\n';
-                        break;
-                    
+                    }
+                    catch { }
+
+
+                    if(italicTag.IsItalic)
+                    {
+                        result += italicTag.Close();
+                        continue;
+                    } else
+                    {
+                        result += italicTag.Create();
+                        continue;
+                    }
+
+                }
+
+                if(inputString[i] == '\n')
+                {
+                    if(paragraphTag.IsParagraph)
+                    {
+                        result += paragraphTag.Close();
+                    }
+
+                    if(headerTag.IsHeader)
+                    {
+                        result += headerTag.Close();
+                    }
+
+
+                    if(listTag.IsList)
+                    {
+                        result += listTag.CloseLi();
+                    }
+                    try
+                    {
+                        if (inputString[i + 1] == '\n' && listTag.IsList)
+                        {
+                            result += listTag.CloseUl();
+                        }
+                    }
+                    catch { }
+
                 }
 
                 result += inputString[i];
             }
-
-            result += paragraphTagSetter.CloseParagraphTag();
         }
 
-        result += "\n</div>";
         WriteToFile(result);
     }
+
 
     private void WriteToFile(string htmlString)
     {
