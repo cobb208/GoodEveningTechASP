@@ -1,0 +1,35 @@
+﻿<Properties StartupConfiguration="{691961A6-FED9-4CB3-B764-D21F7CB3FC27}|Default">
+  <MonoDevelop.Ide.ItemProperties.TestingApp PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.ItemProperties.FrontEndWebApp PreferredExecutionTarget="/Applications/Safari.app" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="MDEngine/Md.cs">
+    <Files>
+      <File FileName="MDEngine/Tags/HeaderTag.cs" Line="38" Column="22" />
+      <File FileName="MDEngine/Tags/ListTag.cs" Line="25" Column="22" />
+      <File FileName="MDEngine/Tags/ParagraphTag.cs" Line="11" Column="4" />
+      <File FileName="MDEngine/Tags/ItalicTag.cs" Line="29" Column="1" />
+      <File FileName="MDEngine/Tags/AnchorTag.cs" Line="86" Column="30" />
+      <File FileName="MDEngine/Md.cs" Line="78" Column="34" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="GoodEveningTech" expanded="True">
+            <Node name="MDEngine" expanded="True">
+              <Node name="Tags" expanded="True" />
+            </Node>
+            <Node name="TestingApp" expanded="True" />
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+</Properties>
