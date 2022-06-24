@@ -4,92 +4,49 @@ namespace MDEngine.Tags
 {
 	public class AnchorTag
 	{
-		private Regex _title;
-		private Regex _anchor;
 		private string _inputString;
 
 		public AnchorTag(string InputString)
 		{
 			_inputString = InputString;
-			_title = new(@"[\[].*[\]]");
-			_anchor = new(@"[(].*[)]");
 		}
 
 		public string Create(ref int i)
-        {
+		{
 			string anchorTagString = "";
 
 			int tempI = i;
 
-			while(_inputString[tempI] != '\n')
-            {
+			Regex rx = new(@"[\[](.*)[\]][(](.*)[)]");
+
+			while (_inputString[tempI] != '\n')
+			{
 				anchorTagString += _inputString[tempI];
 				tempI++;
-            }
+			}
 
-			var correctedTitle = CreateTitle(anchorTagString);
-			var correctedAnchor = CreateAnchor(anchorTagString);
+			var matches = rx.Matches(anchorTagString);
 
-			if(correctedTitle == String.Empty || correctedAnchor == String.Empty)
-            {
-				return String.Empty;
-            }
+			if (matches.Count > 0 && matches[0].Groups.Count > 1)
+			{
 
-			i = tempI;
+				var title = matches[0].Groups[1].Value;
+				var anchor = matches[0].Groups[2].Value;
 
-			return $"<a href='{correctedAnchor}'>{correctedTitle}</a>";
 
-        }
+				if (title == String.Empty || anchor == String.Empty)
+				{
+					return String.Empty;
+				}
 
-		private string CreateTitle(string titleString)
-        {
-			var returnString = "";
+				i = tempI;
 
-			Match titleMatch = _title.Match(titleString);
+				return $"<a href='{anchor}'>{title}</a>";
+			}
 
-			int leftSquareBracketIndex = titleMatch.Value.IndexOf("[");
+			return String.Empty;
 
-			if(leftSquareBracketIndex == -1)
-            {
-				return String.Empty;
-            }
-
-			returnString += titleMatch.Value.Remove(leftSquareBracketIndex, 1);
-
-			int rightSquareBracketIndex = returnString.IndexOf("]");
-
-			if(rightSquareBracketIndex == -1)
-            {
-				return String.Empty;
-            }
-
-			return returnString.Remove(rightSquareBracketIndex, 1);
-        }
-
-		private string CreateAnchor(string anchorString)
-        {
-			var returnString = "";
-
-			Match anchorMatch = _anchor.Match(anchorString);
-
-			int leftBracketIndex = anchorMatch.Value.IndexOf("(");
-
-			if(leftBracketIndex == -1)
-            {
-				return String.Empty;
-            }
-
-			returnString += anchorMatch.Value.Remove(leftBracketIndex, 1);
-
-			int rightBracketIndex = returnString.IndexOf(")");
-
-			if(rightBracketIndex == -1)
-            {
-				return String.Empty;
-            }				
-
-			return returnString.Remove(rightBracketIndex, 1);
-        }
+		}
 
 	}
 }

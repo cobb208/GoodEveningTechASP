@@ -11,6 +11,11 @@ This is a link to something [link here](https://www.google.com) its so cool!
 
 > [a link inside a block quote](https://www.google.com)
 
+---
+
+- list after 
+- a horizontal rule
+
 [I'm in brackets!]
 
 (This is cool in parathesis)
