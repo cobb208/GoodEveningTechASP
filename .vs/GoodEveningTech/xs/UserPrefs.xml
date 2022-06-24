@@ -1,6 +1,8 @@
-﻿<Properties StartupConfiguration="{691961A6-FED9-4CB3-B764-D21F7CB3FC27}|Default">
-  <MonoDevelop.Ide.ItemProperties.TestingApp PreferredExecutionTarget="MonoDevelop.Default" />
+﻿<Properties GitUserInfo="UsingMD" StartupConfiguration="{691961A6-FED9-4CB3-B764-D21F7CB3FC27}|Default">
   <MonoDevelop.Ide.ItemProperties.FrontEndWebApp PreferredExecutionTarget="/Applications/Safari.app" />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.TestingApp PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.Workbench ActiveDocument="MDEngine/Md.cs">
     <Files>
       <File FileName="MDEngine/Tags/HeaderTag.cs" Line="38" Column="22" />
@@ -26,10 +28,6 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
 </Properties>

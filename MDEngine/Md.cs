@@ -16,13 +16,6 @@ public class Md
         _outputFilePath = outputFilePath;
     }
 
-    enum SentenceCase
-    {
-        Italic,
-        Bold,
-        ItalicBold
-    }
-
 
     public void NewGenerateMd()
     {
@@ -35,6 +28,7 @@ public class Md
         {
             var inputString = temp.GetString(b);
 
+            BlockQuoteTag blockQuoteTag = new();
             ListTag listTag = new();
             HeaderTag headerTag = new(inputString);
             ParagraphTag paragraphTag = new();
@@ -44,6 +38,21 @@ public class Md
 
             for(var i = 0; i < inputString.Length; i++)
             {
+
+                if(inputString[i] == '>')
+                {
+                    if(i == 0)
+                    {
+                        result += blockQuoteTag.Create();
+                        continue;
+                    }
+                    if(inputString[i - 1] == '\n')
+                    {
+                        result += blockQuoteTag.Create();
+                        continue;
+                    }
+                    
+                }
 
                 if(inputString[i] == '-')
                 {
@@ -65,8 +74,6 @@ public class Md
                     result += paragraphTag.Create();
                 }
 
-
-                // needs a way to validate it is not a link...
                 if(inputString[i] == '[')
                 {
 
@@ -123,12 +130,18 @@ public class Md
 
                 if(inputString[i] == '\n')
                 {
+
                     if(paragraphTag.IsParagraph)
                     {
                         result += paragraphTag.Close();
                     }
 
-                    if(headerTag.IsHeader)
+                    if (blockQuoteTag.IsBlockQuote)
+                    {
+                        result += blockQuoteTag.Close();
+                    }
+
+                    if (headerTag.IsHeader)
                     {
                         result += headerTag.Close();
                     }
@@ -153,6 +166,8 @@ public class Md
             }
         }
 
+        result += "</div>";
+
         WriteToFile(result);
     }
 
@@ -163,27 +178,5 @@ public class Md
         var html = new UTF8Encoding(true)
             .GetBytes(htmlString);
         fs.Write(html, 0, html.Length);
-    }
-
-    private static SentenceCase SetSentenceCase(string inputString, int index)
-    {
-        try
-        {
-            if (inputString[index + 1] == '*')
-            {
-                return SentenceCase.Bold;
-            }
-
-            if (inputString[index + 2] == '*')
-            {
-                return SentenceCase.ItalicBold;
-            }
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine("Error processing: " + e);
-            return SentenceCase.Italic;
-        }
-        return SentenceCase.Italic;
     }
 }

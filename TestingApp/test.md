@@ -1,10 +1,15 @@
 - # list item 1
 - ## list item 2
+- ### [heading link](https://www.google.com)
 
 This is a link to something [link here](https://www.google.com) its so cool!
 
 [another link](https://www.google.com)
 
+
+> i'm in a block quote
+
+> [a link inside a block quote](https://www.google.com)
 
 [I'm in brackets!]
 
