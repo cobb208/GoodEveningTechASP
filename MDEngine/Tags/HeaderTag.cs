@@ -38,6 +38,8 @@ namespace MDEngine.Tags
 			_isHeader = false;
 			return $"\n</h{tempHeader}>";
         }
+
+		public bool IsOpen() => _isHeader;
 	}
 }
 

@@ -1,7 +1,7 @@
 ﻿using System;
 namespace MDEngine.Tags
 {
-	public class BoldTag
+	public class BoldTag : ITag
 	{
 		private bool _isBold;
 
@@ -23,6 +23,8 @@ namespace MDEngine.Tags
 			_isBold = false;
 			return "</strong>";
         }
+
+		public bool IsOpen() => _isBold;
 	}
 }
 

@@ -1,7 +1,7 @@
 ﻿using System;
 namespace MDEngine.Tags
 {
-	public class ParagraphTag
+	public class ParagraphTag : ITag
 	{
 		private bool _isParagraph;
 
@@ -23,6 +23,8 @@ namespace MDEngine.Tags
 			_isParagraph = false;
 			return "</p>";
         }
+
+		public bool IsOpen() => _isParagraph;
 
 
 	}

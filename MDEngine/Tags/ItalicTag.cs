@@ -1,7 +1,7 @@
 ﻿using System;
 namespace MDEngine.Tags
 {
-	public class ItalicTag
+	public class ItalicTag : ITag
 	{
 		private bool _isItalic;
 
@@ -26,6 +26,8 @@ namespace MDEngine.Tags
 			_isItalic = false;
 			return "</em>";
         }
+
+		public bool IsOpen() => _isItalic;
 
 	}
 }

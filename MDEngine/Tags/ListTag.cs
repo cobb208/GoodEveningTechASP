@@ -1,7 +1,7 @@
 ﻿using System;
 namespace MDEngine.Tags
 {
-	public class ListTag
+	public class ListTag : ITag
 	{
 
 		private bool _isList;
@@ -26,6 +26,11 @@ namespace MDEngine.Tags
 
         }
 
+		public string Close()
+        {
+			return CloseLi() + CloseUl();
+        }
+
 		public string CloseLi()
         {
 			return "\n</li>";
@@ -36,6 +41,8 @@ namespace MDEngine.Tags
 			_isList = false;
 			return "\n</ul>";
         }
+
+		public bool IsOpen() => _isList;
 	}
 }
 
