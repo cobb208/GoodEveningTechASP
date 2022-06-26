@@ -6,8 +6,6 @@ namespace MDEngine.Tags
 
 		private bool _isList;
 
-		public bool IsList => _isList;
-
 		public ListTag()
 		{
 			_isList = false;
@@ -42,7 +40,7 @@ namespace MDEngine.Tags
 			return "\n</ul>";
         }
 
-		public bool IsOpen() => _isList;
+		public bool IsActive() => _isList;
 	}
 }
 

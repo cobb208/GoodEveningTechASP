@@ -1,18 +1,15 @@
 ﻿using System;
 namespace MDEngine.Tags
 {
-	public class HeaderTag
+	public class HeaderTag : ITag
 	{
-		private string _inputString;
+		private readonly string _inputString;
 		private int _headerCounter;
 		private bool _isHeader;
 
-		public bool IsHeader => _isHeader;
-
-
-		public HeaderTag(string InputString)
+		public HeaderTag(string inputString)
 		{
-			_inputString = InputString;
+			_inputString = inputString;
 			_headerCounter = 1;
 			_isHeader = false;
 		}
@@ -31,7 +28,12 @@ namespace MDEngine.Tags
 			return $"<h{_headerCounter}>\n";
         }
 
-		public string Close()
+        public string Create()
+        {
+	        return "<h1>";
+        }
+
+        public string Close()
         {
 			int tempHeader = _headerCounter;
 			_headerCounter = 0;
@@ -39,7 +41,8 @@ namespace MDEngine.Tags
 			return $"\n</h{tempHeader}>";
         }
 
-		public bool IsOpen() => _isHeader;
+        public bool IsActive() => _isHeader;
+        
 	}
 }
 

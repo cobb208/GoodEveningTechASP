@@ -1,11 +1,9 @@
 ﻿using System;
 namespace MDEngine.Tags
 {
-	public class BlockQuoteTag
+	public class BlockQuoteTag : ITag
 	{
 		private bool _isBlockQuote = false;
-
-		public bool IsBlockQuote => _isBlockQuote;
 
 		public BlockQuoteTag()
 		{
@@ -32,6 +30,8 @@ namespace MDEngine.Tags
 			}
 			return "";
         }
+
+		public bool IsActive() => _isBlockQuote;
 	}
 }
 

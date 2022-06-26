@@ -5,8 +5,6 @@ namespace MDEngine.Tags
 	{
 		private bool _isParagraph;
 
-		public bool IsParagraph => _isParagraph;
-
 		public ParagraphTag()
 		{
 			_isParagraph = false;
@@ -24,7 +22,7 @@ namespace MDEngine.Tags
 			return "</p>";
         }
 
-		public bool IsOpen() => _isParagraph;
+		public bool IsActive() => _isParagraph;
 
 
 	}

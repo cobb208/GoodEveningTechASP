@@ -7,7 +7,7 @@ namespace MDEngine.Tags
 
 		public string Close();
 
-		public bool IsOpen();
+		public bool IsActive();
 	}
 }
 

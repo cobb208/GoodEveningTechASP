@@ -4,18 +4,18 @@ namespace MDEngine.Tags
 {
 	public class AnchorTag
 	{
-		private string _inputString;
+		private readonly string _inputString;
 
-		public AnchorTag(string InputString)
+		public AnchorTag(string inputString)
 		{
-			_inputString = InputString;
+			_inputString = inputString;
 		}
 
 		public string Create(ref int i)
 		{
-			string anchorTagString = "";
+			var anchorTagString = "";
 
-			int tempI = i;
+			var tempI = i;
 
 			Regex rx = new(@"[\[](.*)[\]][(](.*)[)]");
 
@@ -34,9 +34,9 @@ namespace MDEngine.Tags
 				var anchor = matches[0].Groups[2].Value;
 
 
-				if (title == String.Empty || anchor == String.Empty)
+				if (title == string.Empty || anchor == string.Empty)
 				{
-					return String.Empty;
+					return string.Empty;
 				}
 
 				i = tempI;
@@ -44,7 +44,7 @@ namespace MDEngine.Tags
 				return $"<a href='{anchor}'>{title}</a>";
 			}
 
-			return String.Empty;
+			return string.Empty;
 
 		}
 

@@ -53,5 +53,5 @@ var newFile = System.IO.Path.Join(path, "test.html");
 var md = new Md(folder, newFile);
 
 //md.GenerateMd();
-md.NewGenerateMd();
+md.GenerateMd();
 

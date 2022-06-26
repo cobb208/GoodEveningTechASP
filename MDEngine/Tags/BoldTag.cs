@@ -5,8 +5,6 @@ namespace MDEngine.Tags
 	{
 		private bool _isBold;
 
-		public bool IsBold => _isBold;
-
 		public BoldTag()
 		{
 			_isBold = false;
@@ -24,7 +22,7 @@ namespace MDEngine.Tags
 			return "</strong>";
         }
 
-		public bool IsOpen() => _isBold;
+		public bool IsActive() => _isBold;
 	}
 }
 

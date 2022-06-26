@@ -6,9 +6,6 @@ namespace MDEngine.Tags
 		private bool _isItalic;
 
 
-		public bool IsItalic => _isItalic;
-
-
 		public ItalicTag()
 		{
 			_isItalic = false;
@@ -27,7 +24,7 @@ namespace MDEngine.Tags
 			return "</em>";
         }
 
-		public bool IsOpen() => _isItalic;
+		public bool IsActive() => _isItalic;
 
 	}
 }
