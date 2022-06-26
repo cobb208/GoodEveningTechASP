@@ -10,13 +10,14 @@ public class Md
     private readonly string _outputFilePath;
 
     private readonly BlockQuoteTag _blockQuoteTag;
-    private readonly ListTag _listTag;
+    private readonly UnorderedListTag _unorderedListTag;
     private readonly HeaderTag _headerTag;
     private readonly ParagraphTag _paragraphTag;
     private readonly ItalicTag _italicTag;
     private readonly BoldTag _boldTag;
     private readonly AnchorTag _anchorTag;
     private readonly HorizontalRuleTag _horizontalRuleTag;
+    private readonly OrderedListTag _orderedListTag;
     private int _index;
     private readonly string _markdownString;
     private string _result;
@@ -27,15 +28,16 @@ public class Md
         _inputFilePath = inputFilePath;
         _outputFilePath = outputFilePath;
         _blockQuoteTag = new BlockQuoteTag();
-        _listTag = new ListTag();
         _paragraphTag = new ParagraphTag();
         _italicTag = new ItalicTag();
         _boldTag = new BoldTag();
         _horizontalRuleTag = new HorizontalRuleTag();
         _index = 0;
         _markdownString = CollectStringFromFile();
+        _unorderedListTag = new UnorderedListTag(_markdownString);
         _headerTag = new HeaderTag(_markdownString);
         _anchorTag = new AnchorTag(_markdownString);
+        _orderedListTag = new OrderedListTag(_markdownString);
         _result = "<div class='container'>\n";
     }
 
@@ -44,7 +46,7 @@ public class Md
     public void GenerateMd()
     {
         ReadMd();
-        WriteHTMLToFile();
+        WriteHtmlToFile();
     }
     
     private void ReadMd()
@@ -52,6 +54,7 @@ public class Md
         for (_index = 0; _index < _markdownString.Length; _index++)
         {
             if (!CheckAndValidateIfBlockListHeader(_markdownString[_index])) continue;
+            //_result += _orderedListTag.Create(ref _index);
             GenerateParagraphTag();
             if (!CheckAndValidateIfAnchorBoldItalic(_markdownString[_index])) continue;
             _result += _markdownString[_index];
@@ -61,6 +64,14 @@ public class Md
     
     private bool CheckAndValidateIfBlockListHeader(char character)
     {
+        if (char.IsDigit(character))
+        {
+            // need to fix to ignore numbers.
+            var tempResult = _orderedListTag.Create(ref _index);
+            _result += _orderedListTag.Create(ref _index);
+            return false;
+        }
+        
         switch (character)
         {
             case '>':
@@ -68,7 +79,7 @@ public class Md
                 break;
             case '-':
                 if (!CheckAndValidateIfHorizontalRule()) return false;
-                _result += _listTag.Create();
+                _result += _unorderedListTag.Create();
                 return false;
             case '#':
                 _result += _headerTag.Create(ref _index);
@@ -94,16 +105,18 @@ public class Md
                 CloseOutTag(_blockQuoteTag);
                 CloseOutTag(_headerTag);
                 CloseOutUnorderedListTag();
+                CloseOutOrderedListTag();
                 break;
         }
 
         return true;
     }
     
+
     private void GenerateParagraphTag()
     {
         if (!_headerTag.IsActive()
-            && !_listTag.IsActive()
+            && !_unorderedListTag.IsActive()
             && !_paragraphTag.IsActive()
             && (_markdownString[_index] != '\n')
         )
@@ -210,16 +223,16 @@ public class Md
     }
     private void CloseOutUnorderedListTag()
     {
-        if (_listTag.IsActive())
+        if (_unorderedListTag.IsActive())
         {
-            _result += _listTag.CloseLi();
+            _result += _unorderedListTag.CloseLi();
         }
         
         try
         {
-            if (_markdownString[_index + 1] == '\n' && _listTag.IsActive())
+            if (_markdownString[_index + 1] == '\n' && _unorderedListTag.IsActive())
             {
-                _result += _listTag.CloseUl();
+                _result += _unorderedListTag.CloseList();
             }
         }
         catch
@@ -227,7 +240,26 @@ public class Md
             // ignored
         }
     }
-
+    
+    private void CloseOutOrderedListTag()
+    {
+        if (_orderedListTag.IsActive())
+        {
+            _result += _orderedListTag.CloseLi();
+        }
+        
+        try
+        {
+            if (_markdownString[_index + 1] == '\n' && _orderedListTag.IsActive())
+            {
+                _result += _orderedListTag.CloseList();
+            }
+        }
+        catch
+        {
+            // ignored
+        }
+    }
 
     private string CollectStringFromFile()
     {
@@ -251,7 +283,7 @@ public class Md
 
 
 
-    private void WriteHTMLToFile()
+    private void WriteHtmlToFile()
     {
         var fs = File.Create(_outputFilePath);
         var html = new UTF8Encoding(true)

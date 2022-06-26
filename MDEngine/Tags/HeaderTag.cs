@@ -4,14 +4,12 @@ namespace MDEngine.Tags
 	public class HeaderTag : ITag
 	{
 		private readonly string _inputString;
-		private int _headerCounter;
+		private int _headerCounter = 1;
 		private bool _isHeader;
 
 		public HeaderTag(string inputString)
 		{
 			_inputString = inputString;
-			_headerCounter = 1;
-			_isHeader = false;
 		}
 
 
@@ -35,7 +33,7 @@ namespace MDEngine.Tags
 
         public string Close()
         {
-			int tempHeader = _headerCounter;
+			var tempHeader = _headerCounter;
 			_headerCounter = 0;
 			_isHeader = false;
 			return $"\n</h{tempHeader}>";

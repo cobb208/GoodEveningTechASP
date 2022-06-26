@@ -5,11 +5,6 @@ namespace MDEngine.Tags
 	{
 		private bool _isBold;
 
-		public BoldTag()
-		{
-			_isBold = false;
-		}
-
 		public string Create()
         {
 			_isBold = true;

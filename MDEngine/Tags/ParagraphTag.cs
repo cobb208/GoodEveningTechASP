@@ -4,12 +4,6 @@ namespace MDEngine.Tags
 	public class ParagraphTag : ITag
 	{
 		private bool _isParagraph;
-
-		public ParagraphTag()
-		{
-			_isParagraph = false;
-		}
-
 		public string Create()
         {
 			_isParagraph = true;

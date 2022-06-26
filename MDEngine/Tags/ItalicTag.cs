@@ -4,14 +4,7 @@ namespace MDEngine.Tags
 	public class ItalicTag : ITag
 	{
 		private bool _isItalic;
-
-
-		public ItalicTag()
-		{
-			_isItalic = false;
-		}
-
-
+		
 		public string Create()
         {
 			_isItalic = true;
