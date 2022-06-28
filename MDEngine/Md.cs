@@ -54,7 +54,6 @@ public class Md
         for (_index = 0; _index < _markdownString.Length; _index++)
         {
             if (!CheckAndValidateIfBlockListHeader(_markdownString[_index])) continue;
-            //_result += _orderedListTag.Create(ref _index);
             GenerateParagraphTag();
             if (!CheckAndValidateIfAnchorBoldItalic(_markdownString[_index])) continue;
             _result += _markdownString[_index];
@@ -64,14 +63,8 @@ public class Md
     
     private bool CheckAndValidateIfBlockListHeader(char character)
     {
-        if (char.IsDigit(character))
-        {
-            // need to fix to ignore numbers.
-            var tempResult = _orderedListTag.Create(ref _index);
-            _result += _orderedListTag.Create(ref _index);
-            return false;
-        }
-        
+        if (!CheckAndValidateIfOrderedList(character)) return false;
+
         switch (character)
         {
             case '>':
@@ -123,6 +116,15 @@ public class Md
         {
             _result += _paragraphTag.Create();
         }
+    }
+
+    private bool CheckAndValidateIfOrderedList(char character)
+    {
+        if (!char.IsDigit(character)) return true;
+        var tempVal = _orderedListTag.Create(ref _index);
+        if (tempVal == string.Empty) return true;
+        _result += tempVal;
+        return false;
     }
 
     private bool CheckAndValidateIfBlockQuote()

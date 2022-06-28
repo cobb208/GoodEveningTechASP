@@ -20,7 +20,7 @@ public class OrderedListTag
     
         var tempI = index;
     
-        Regex rx = new(@"(\d+[\.]\s+)(.*)");
+        Regex rx = new(@"(\d+\.\s+)(.*)");
     
         try
         {
@@ -39,6 +39,7 @@ public class OrderedListTag
         var matches = rx.Matches(regexString);
 
         if (matches.Count <= 0 || matches[0].Groups.Count <= 1) return string.Empty;
+        if (matches[0].Groups[1].Value == "") return string.Empty;
         var returnString = "";
         if (!_isActive) returnString += "<ol>\n";
         _isActive = true;
