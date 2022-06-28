@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace MDEngine.Tags
+namespace MDEngine.Tags.Lists
 {
-	public class UnorderedListTag : ITag
+	public class UnorderedListTag
 	{
 		private readonly string _inputString;
 		private bool _isActive;

@@ -1,5 +1,5 @@
 ﻿using System;
-namespace MDEngine.Tags
+namespace MDEngine.Tags.InlineElements
 {
 	public class HeaderTag : ITag
 	{

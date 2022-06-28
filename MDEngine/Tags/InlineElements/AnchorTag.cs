@@ -1,6 +1,6 @@
-﻿using System;
-using System.Text.RegularExpressions;
-namespace MDEngine.Tags
+﻿using System.Text.RegularExpressions;
+
+namespace MDEngine.Tags.InlineElements
 {
 	public class AnchorTag
 	{
